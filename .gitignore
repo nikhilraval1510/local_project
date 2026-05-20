@@ -1,0 +1,13 @@
+# Ignore the massive cloud provider binaries causing GitHub blocks
+.terraform/
+.terraform.lock.hcl
+Code/.terraform/
+
+# Ignore dangerous raw secrets and clear-text state mappings
+*.tfstate
+*.tfstate.backup
+Code/*.tfstate
+Code/*.tfstate.backup
+
+# Ignore local temporary log footprints
+*.log

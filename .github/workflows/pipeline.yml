@@ -1,0 +1,28 @@
+# The name of our automated factory line
+name: Build and Push Docker Image
+
+# PILLAR 1: THE TRIGGER
+# Wake up the robot the exact second code is pushed to the 'main' branch
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  assemble:
+    # PILLAR 2: THE RUNNER
+    # Borrow a clean, temporary Ubuntu cloud computer from GitHub
+    runs-on: ubuntu-latest
+
+    # PILLAR 3: THE STEPS (The Assembly Line)
+    steps:
+      # Step 1: Pull our code out of the GitHub repository onto the cloud runner
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      # Step 2: Run a quick quality check to prove our automation factory works
+      - name: Run Quality Check
+        run: echo "Code looks clean! Starting assembly line..."
+
+      # Step 3: Bake the container image on the cloud computer just like we did manually
+      - name: Build Docker Image
+        run: docker build -t guchuu2115/my-first-app:latest .
