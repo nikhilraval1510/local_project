@@ -4,6 +4,9 @@ FROM node:18-alpine
 # 2. Step inside the container and create a working directory room
 WORKDIR /usr/src/app
 
+# DEVSECOPS FIX: Drop privileges from root down to a restricted user
+USER node
+
 # 3. Inject a mini web server directly into the container using an inline script
 CMD ["node", "-e", "const http = require('http'); http.createServer((req, res) => res.end('Container Live!')).listen(8080); console.log('Server running on port 8080');"]
 
