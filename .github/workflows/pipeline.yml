@@ -17,7 +17,7 @@ jobs:
     steps:
       # Step 1: Pull our code out of the GitHub repository onto the cloud runner
       - name: Checkout Code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       # Step 2: Run a quick quality check to prove our automation factory works
       - name: Run Quality Check
