@@ -12,6 +12,13 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v6
 
+      # STAGE 1 (DEVSECOPS): Code Quality & Security Linter
+      - name: Lint Dockerfile
+        uses: hadolint/hadolint-action@v3.1.0
+        with:
+          dockerfile: Dockerfile
+          failure-threshold: warning
+
       # New Step 2: Securely log into Docker Hub using our vault keys
       - name: Log in to Docker Hub
         uses: docker/login-action@v3
