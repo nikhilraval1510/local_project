@@ -1,14 +1,21 @@
-# 1. Grab a standard, pre-packaged lightweight Linux box with Node.js pre-installed
+# 1. Base Image
 FROM node:18-alpine
 
-# 2. Step inside the container and create a working directory room
+# 2. Working Directory
 WORKDIR /usr/src/app
 
-# DEVSECOPS FIX: Drop privileges from root down to a restricted user
+# 3. Copy dependencies and install them
+COPY package.json ./
+RUN npm install
+
+# 4. Copy the actual application code
+COPY server.js ./
+
+# 5. DEVSECOPS FIX: Drop privileges
 USER node
 
-# 3. Inject a mini web server directly into the container using an inline script
-CMD ["node", "-e", "const http = require('http'); http.createServer((req, res) => res.end('Container Live!')).listen(8080); console.log('Server running on port 8080');"]
+# 6. Run the real server file instead of the inline script
+CMD ["node", "server.js"]
 
-# 4. Open up port 8080 on the container wall so traffic can enter
+# 7. Expose the port
 EXPOSE 8080
