@@ -42,7 +42,7 @@ resource "aws_db_instance" "production_db" {
   engine_version         = "15"
   instance_class         = "db.t3.micro"
   db_name                = "enterprise_data"
-  username               = "admin"
+  username               = "dbadmin"
   password               = "secretpassword"
   skip_final_snapshot    = true # Allows us to delete it easily later
   vpc_security_group_ids = [aws_security_group.db_sg.id]
@@ -73,7 +73,7 @@ resource "aws_instance" "prod_web_server" {
                   ports:
                     - "80:8080"
                   environment:
-                    - DB_USER=admin
+                    - DB_USER=dbadmin
                     - DB_PASSWORD=secretpassword
                     - DB_NAME=enterprise_data
                     - DB_HOST=${aws_db_instance.production_db.address}
