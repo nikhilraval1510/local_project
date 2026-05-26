@@ -3,8 +3,8 @@ provider "aws" {
 }
 
 # 1. THE FIREWALL
-resource "aws_security_group" "web_sg_v2" {
-  name        = "allow_web_traffic_v2"
+resource "aws_security_group" "web_sg_v3" {
+  name        = "allow_web_traffic_v3"
   description = "Allow incoming HTTP traffic from the internet"
 
   ingress {
@@ -28,7 +28,7 @@ resource "aws_instance" "automated_server" {
   ami           = "ami-04e601abe3e1a910f"
   instance_type = "t3.micro"
   
-  vpc_security_group_ids = [aws_security_group.web_sg_v2.id]
+  vpc_security_group_ids = [aws_security_group.web_sg_v3.id]
 
   # 3. THE CLOUD-INIT BOOT SCRIPT (Only ONE user_data block!)
   user_data = <<-EOF
