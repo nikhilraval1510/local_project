@@ -2,9 +2,8 @@ provider "aws" {
   region = "eu-central-1"
 }
 
-# 1. THE FIREWALL
-resource "aws_security_group" "web_sg_v3" {
-  name        = "allow_web_traffic_v3"
+resource "aws_security_group" "web_sg_v2" {
+  name        = "allow_web_traffic_v2"
   description = "Allow incoming HTTP traffic from the internet"
 
   ingress {
@@ -23,14 +22,12 @@ resource "aws_security_group" "web_sg_v3" {
   }
 }
 
-# 2. THE SERVER
 resource "aws_instance" "automated_server" {
   ami           = "ami-04e601abe3e1a910f"
   instance_type = "t3.micro"
   
-  vpc_security_group_ids = [aws_security_group.web_sg_v3.id]
+  vpc_security_group_ids = [aws_security_group.web_sg_v2.id]
 
-  # 3. THE CLOUD-INIT BOOT SCRIPT (Only ONE user_data block!)
   user_data = <<-EOF
               #!/bin/bash
               sudo apt-get update -y
@@ -43,12 +40,14 @@ resource "aws_instance" "automated_server" {
               services:
                 web:
                   image: guchuu2115/my-first-app:latest
+                  restart: always
                   ports:
                     - "80:8080"
                   depends_on:
                     - database
                 database:
                   image: postgres:15-alpine
+                  restart: always
                   environment:
                     POSTGRES_USER: admin
                     POSTGRES_PASSWORD: secretpassword
