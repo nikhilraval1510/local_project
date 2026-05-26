@@ -2,8 +2,8 @@ provider "aws" {
   region = "eu-central-1"
 }
 
-resource "aws_security_group" "web_sg_v4" {
-  name        = "allow_web_traffic_v4"
+resource "aws_security_group" "web_sg_v5" {
+  name        = "allow_web_traffic_5"
   description = "Allow incoming HTTP traffic from the internet"
 
   ingress {
@@ -26,7 +26,7 @@ resource "aws_instance" "automated_server" {
   ami           = "ami-04e601abe3e1a910f"
   instance_type = "t3.micro"
   
-  vpc_security_group_ids = [aws_security_group.web_sg_v4.id]
+  vpc_security_group_ids = [aws_security_group.web_sg_v5.id]
 
   user_data = <<-EOF
               #!/bin/bash
