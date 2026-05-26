@@ -4,7 +4,7 @@ provider "aws" {
 
 # 1. WEB SECURITY GROUP (Allows Internet access to the Web Server)
 resource "aws_security_group" "web_sg_prod" {
-  name        = "allow_web_traffic_prod"
+  name        = "allow_web_traffic_prod_v2"
   description = "Allow incoming HTTP traffic"
 
   ingress {
@@ -24,7 +24,7 @@ resource "aws_security_group" "web_sg_prod" {
 # 2. DATABASE SECURITY GROUP (The Vault)
 # Notice this doesn't allow 0.0.0.0/0. It ONLY allows traffic from the Web Server!
 resource "aws_security_group" "db_sg" {
-  name        = "allow_db_traffic"
+  name        = "allow_db_traffic_v2"
   description = "Allow traffic from web server to database"
 
   ingress {
