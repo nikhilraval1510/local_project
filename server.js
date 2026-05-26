@@ -13,7 +13,10 @@ const client = new Client({
 // 2. Connect to the database
 client.connect()
   .then(() => console.log('✅ Connected to PostgreSQL!'))
-  .catch(err => console.error('❌ Database connection error', err.stack));
+  .catch(err => { 
+    console.error('❌ Database connection error', err.stack);
+    process.exit(1); // DEVOP FIX: Force crash so Docker restarts it!
+});
 
 // 3. Start the Web Server
 const server = http.createServer(async (req, res) => {
